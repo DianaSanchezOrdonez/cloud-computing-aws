@@ -32,7 +32,7 @@ def customers():
 def customer(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     cursor = mydb.cursor(dictionary=True)
-    cursor.execute(f"SELECT * FROM customers WHERE id = {id}")
+    cursor.execute("SELECT * FROM customers WHERE id = %s", (str(id),))
     result = cursor.fetchone()
     cursor.close()
     mydb.close()
@@ -69,7 +69,7 @@ def customer(id:UUID, item:schemas.Customer):
     address = item.address
     cursor = mydb.cursor(dictionary=True)
     sql = "UPDATE customers SET email=%s, first_name=%s, last_name=%s, phone=%s, status=%s, address=%s WHERE id=%s"
-    val = (email, first_name, last_name, phone, status, address, id)
+    val = (email, first_name, last_name, phone, status, address, str(id))
     cursor.execute(sql, val)
     mydb.commit()
     cursor.close()
@@ -81,7 +81,7 @@ def customer(id:UUID, item:schemas.Customer):
 def customer(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     cursor = mydb.cursor(dictionary=True)
-    cursor.execute(f"DELETE FROM customers WHERE id = {id}")
+    cursor.execute("DELETE FROM customers WHERE id = %s", (str(id),))
     mydb.commit()
     cursor.close()
     mydb.close()

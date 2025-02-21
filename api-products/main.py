@@ -30,7 +30,7 @@ def products():
 def product(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     cursor = mydb.cursor(dictionary=True)
-    cursor.execute(f"SELECT * FROM products WHERE id = {id}")
+    cursor.execute("SELECT * FROM products WHERE id = %s", (str(id),))
     result = cursor.fetchone()
     cursor.close()
     mydb.close()
@@ -69,7 +69,7 @@ def product(id: UUID, item:schemas.Product):
     status = item.status
     cursor = mydb.cursor(dictionary=True)
     sql = "UPDATE products SET sku=%s, name=%s, description=%s, price=%s, category_id=%s, status=%s WHERE id=%s"
-    val = (sku, name, description, price, category_id, status, id)
+    val = (sku, name, description, price, category_id, status, str(id))
     cursor.execute(sql, val)
     mydb.commit()
     cursor.close()
@@ -81,7 +81,7 @@ def product(id: UUID, item:schemas.Product):
 def product(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     cursor = mydb.cursor(dictionary=True)
-    cursor.execute(f"DELETE FROM products WHERE id = {id}")
+    cursor.execute("DELETE FROM products WHERE id = %s", (str(id),))
     mydb.commit()
     cursor.close()
     mydb.close()
