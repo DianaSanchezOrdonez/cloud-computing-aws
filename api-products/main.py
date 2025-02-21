@@ -31,7 +31,14 @@ def echo_test():
 def products():
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     cursor = mydb.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM products")
+    query = """
+        SELECT 
+            p.id, p.name, p.price, p.stock, 
+            c.id AS category_id, c.name AS category_name, c.description AS category_description
+        FROM products p
+        LEFT JOIN categories c ON p.categoryId = c.id
+    """
+    cursor.execute(query)
     result = cursor.fetchall()
     cursor.close()
     mydb.close()
