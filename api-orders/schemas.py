@@ -4,12 +4,12 @@ from datetime import datetime
 from typing import Optional
 
 class Order(BaseModel):
-    id: UUID
+    id: Optional[UUID] = None
     cliente_id: UUID
     status: str
     total_amount: float = Field(..., gt=0)
-    created_at: datetime
-    updated_at: datetime
+    created_at: Optional[datetime] = None 
+    updated_at: Optional[datetime] = None
 
 class OrderItem(BaseModel):
     order_id: UUID

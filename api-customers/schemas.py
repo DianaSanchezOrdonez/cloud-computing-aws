@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import Optional
 
 class Customer(BaseModel):
-    id: Optional[UUID] = None  # ID opcional en la solicitud
+    id: Optional[UUID] = None
     email: EmailStr
     first_name: str
     last_name: str

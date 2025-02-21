@@ -95,3 +95,14 @@ def product(id: UUID):
     cursor.close()
     mydb.close()
     return {"message": "Product deleted successfully"}
+
+# Categories 
+@app.get("/categories")
+def categories():
+    mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
+    cursor = mydb.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM categories")
+    result = cursor.fetchall()
+    cursor.close()
+    mydb.close()
+    return {"categories": result}
