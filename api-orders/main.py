@@ -1,9 +1,20 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import mysql.connector
 import schemas
 from uuid import UUID
 
 app = FastAPI()
+
+origins = ['*'] # Permite que el Api Rest se consuma desde cualquier origen
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 host_name = "172.31.85.15" # IPv4 privada de "MV BD"
 port_number = "8007"
