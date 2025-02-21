@@ -10,10 +10,12 @@
 	</head>
 	<body>
 		<div class="container mt-5">
-            <div class="mb-3">
-                <a href="index.html" class="btn btn-secondary">🏠 Volver al Dashboard</a>
-            </div>
-            
+			<div class="mb-3">
+				<a href="index.html" class="btn btn-secondary"
+					>🏠 Volver al Dashboard</a
+				>
+			</div>
+
 			<h2 class="text-center">Gestión de Clientes</h2>
 			<button
 				class="btn btn-primary mb-3"
@@ -30,7 +32,7 @@
 						<th>Nombre</th>
 						<th>Apellidos</th>
 						<th>Teléfono</th>
-                        <th>Dirección</th>
+						<th>Dirección</th>
 					</tr>
 				</thead>
 				<tbody></tbody>
@@ -55,21 +57,46 @@
 							aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<form>
+						<form id="form-client">
+							<div class="mb-3">
+								<label class="form-label">Correo</label>
+								<input
+									type="email"
+									class="form-control"
+									id="email"
+									required />
+							</div>
 							<div class="mb-3">
 								<label class="form-label">Nombre</label>
-								<input type="text" class="form-control" />
+								<input
+									type="text"
+									class="form-control"
+									id="first_name"
+									required />
 							</div>
 							<div class="mb-3">
-								<label class="form-label">Precio</label>
-								<input type="number" class="form-control" />
+								<label class="form-label">Apellidos</label>
+								<input
+									type="text"
+									class="form-control"
+									id="last_name"
+									required />
 							</div>
 							<div class="mb-3">
-								<label class="form-label">Categoría</label>
-								<select class="form-select">
-									<option value="cemento">Cemento</option>
-									<option value="concreto">Concreto</option>
-								</select>
+								<label class="form-label">Teléfono</label>
+								<input
+									type="text"
+									class="form-control"
+									id="phone"
+									required />
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Dirección</label>
+								<input
+									type="text"
+									class="form-control"
+									id="address"
+									required />
 							</div>
 							<button type="submit" class="btn btn-success">
 								Guardar
