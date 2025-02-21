@@ -9,7 +9,7 @@ class Product(BaseModel):
     name: str = Field(..., min_length=1, max_length=255)
     description: Optional[str] = None
     price: float = Field(..., gt=0)
-    category_id: UUID
+    category_id: Optional[UUID] = None
     status: str = "ACTIVE"
     created_at: datetime
     updated_at: datetime

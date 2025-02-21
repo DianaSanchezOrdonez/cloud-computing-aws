@@ -43,7 +43,7 @@ def product(item:schemas.Product):
     name = item.name
     description = item.description
     price = item.price
-    category_id = item.category_id
+    category_id = item.category_id if item.category_id else None
     status = item.status
     cursor = mydb.cursor(dictionary=True)
     sql = """
@@ -65,7 +65,7 @@ def product(id: UUID, item:schemas.Product):
     name = item.name
     description = item.description
     price = item.price
-    category_id = item.category_id
+    category_id = item.category_id if item.category_id else None
     status = item.status
     cursor = mydb.cursor(dictionary=True)
     sql = "UPDATE products SET sku=%s, name=%s, description=%s, price=%s, category_id=%s, status=%s WHERE id=%s"

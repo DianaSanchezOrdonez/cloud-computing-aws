@@ -14,7 +14,7 @@ CREATE TABLE products (
     name VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10,2) NOT NULL,
-    category_id CHAR(36) NOT NULL,
+    category_id CHAR(36),
     status ENUM('ACTIVE', 'INACTIVE') NOT NULL DEFAULT 'ACTIVE',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -29,3 +29,23 @@ CREATE TABLE inventarios (
     PRIMARY KEY (product_id),
     CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
+
+INSERT INTO categories (id, name, created_at) VALUES
+(UUID(), 'Superplastificantes', NOW()),
+(UUID(), 'Acelerantes de fraguado', NOW()),
+(UUID(), 'Retardantes de fraguado', NOW());
+
+INSERT INTO products (id, sku, name, description, price, category_id, status, created_at, updated_at) VALUES
+(UUID(), 'AD001', 'Superplastificante Premium', 'Aditivo para mejorar la trabajabilidad del concreto', 50.75, 
+    (SELECT id FROM categories WHERE name = 'Superplastificantes'), 'ACTIVE', NOW(), NOW()),
+
+(UUID(), 'AD002', 'Acelerante de Fraguado Rápido', 'Aditivo que acelera el endurecimiento del concreto', 45.90, 
+    (SELECT id FROM categories WHERE name = 'Acelerantes de fraguado'), 'ACTIVE', NOW(), NOW()),
+
+(UUID(), 'AD003', 'Retardante de Fraguado Plus', 'Aditivo para retrasar el fraguado del cemento en climas cálidos', 40.00, 
+    (SELECT id FROM categories WHERE name = 'Retardantes de fraguado'), 'ACTIVE', NOW(), NOW());
+
+INSERT INTO inventarios (product_id, quantity, created_at, updated_at) VALUES
+((SELECT id FROM products WHERE sku = 'AD001'), 100, NOW(), NOW()),
+((SELECT id FROM products WHERE sku = 'AD002'), 200, NOW(), NOW()),
+((SELECT id FROM products WHERE sku = 'AD003'), 150, NOW(), NOW());
