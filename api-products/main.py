@@ -33,10 +33,10 @@ def products():
     cursor = mydb.cursor(dictionary=True)
     query = """
         SELECT 
-            p.id, p.name, p.price, p.stock, 
-            c.id AS category_id, c.name AS category_name, c.description AS category_description
+            p.id, p.sku, p.name, p.description, p.price, p.status,
+            c.id AS category_id, c.name AS category_name
         FROM products p
-        LEFT JOIN categories c ON p.categoryId = c.id
+        LEFT JOIN categories c ON p.category_id = c.id
     """
     cursor.execute(query)
     result = cursor.fetchall()
