@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import mysql.connector
 import schemas
+from uuid import UUID
 
 app = FastAPI()
 
@@ -26,7 +27,7 @@ def products():
     return {"products": result}
 
 @app.get("/products/{id}")
-def product(id: int):
+def product(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     cursor = mydb.cursor()
     cursor.execute(f"SELECT * FROM products WHERE id = {id}")
@@ -58,7 +59,7 @@ def product(item:schemas.Product):
 
 # Modify a customer
 @app.put("/products/{id}")
-def product(id:int, item:schemas.Product):
+def product(id: UUID, item:schemas.Product):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     sku = item.sku
     name = item.name
@@ -77,7 +78,7 @@ def product(id:int, item:schemas.Product):
 
 # Delete a customer by ID
 @app.delete("/products/{id}")
-def product(id: int):
+def product(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     cursor = mydb.cursor()
     cursor.execute(f"DELETE FROM products WHERE id = {id}")

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import mysql.connector
 import schemas
+from uuid import UUID
 
 app = FastAPI()
 
@@ -28,7 +29,7 @@ def customers():
 
 # Get an customer by ID
 @app.get("/customers/{id}")
-def customer(id: int):
+def customer(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     cursor = mydb.cursor()
     cursor.execute(f"SELECT * FROM customers WHERE id = {id}")
@@ -58,7 +59,7 @@ def customer(item:schemas.Customer):
 
 # Modify a customer
 @app.put("/customers/{id}")
-def customer(id:int, item:schemas.Customer):
+def customer(id:UUID, item:schemas.Customer):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     email = item.email
     first_name = item.first_name
@@ -77,7 +78,7 @@ def customer(id:int, item:schemas.Customer):
 
 # Delete a customer by ID
 @app.delete("/customers/{id}")
-def customer(id: int):
+def customer(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
     cursor = mydb.cursor()
     cursor.execute(f"DELETE FROM customers WHERE id = {id}")
