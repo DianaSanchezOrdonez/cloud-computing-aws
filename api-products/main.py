@@ -19,7 +19,7 @@ def echo_test():
 @app.get("/products")
 def products():
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
-    cursor = mydb.cursor()
+    cursor = mydb.cursor(dictionary=True)
     cursor.execute("SELECT * FROM products")
     result = cursor.fetchall()
     cursor.close()
@@ -29,7 +29,7 @@ def products():
 @app.get("/products/{id}")
 def product(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
-    cursor = mydb.cursor()
+    cursor = mydb.cursor(dictionary=True)
     cursor.execute(f"SELECT * FROM products WHERE id = {id}")
     result = cursor.fetchone()
     cursor.close()
@@ -45,7 +45,7 @@ def product(item:schemas.Product):
     price = item.price
     category_id = item.category_id
     status = item.status
-    cursor = mydb.cursor()
+    cursor = mydb.cursor(dictionary=True)
     sql = """
         INSERT INTO products (sku, name, description, price, category_id, status)
         VALUES (%s, %s, %s, %s, %s, %s)
@@ -67,7 +67,7 @@ def product(id: UUID, item:schemas.Product):
     price = item.price
     category_id = item.category_id
     status = item.status
-    cursor = mydb.cursor()
+    cursor = mydb.cursor(dictionary=True)
     sql = "UPDATE products SET sku=%s, name=%s, description=%s, price=%s, category_id=%s, status=%s WHERE id=%s"
     val = (sku, name, description, price, category_id, status, id)
     cursor.execute(sql, val)
@@ -80,7 +80,7 @@ def product(id: UUID, item:schemas.Product):
 @app.delete("/products/{id}")
 def product(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
-    cursor = mydb.cursor()
+    cursor = mydb.cursor(dictionary=True)
     cursor.execute(f"DELETE FROM products WHERE id = {id}")
     mydb.commit()
     cursor.close()
