@@ -57,7 +57,6 @@ def product(item:schemas.Product):
     mydb.close()
     return {"message": "Product added successfully"}
 
-# Modify a customer
 @app.put("/products/{id}")
 def product(id: UUID, item:schemas.Product):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  
@@ -76,7 +75,6 @@ def product(id: UUID, item:schemas.Product):
     mydb.close()
     return {"message": "Product modified successfully"}
 
-# Delete a customer by ID
 @app.delete("/products/{id}")
 def product(id: UUID):
     mydb = mysql.connector.connect(host=host_name, port=port_number, user=user_name, password=password_db, database=database_name)  

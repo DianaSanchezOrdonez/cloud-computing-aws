@@ -1,31 +1,33 @@
-DROP DATABASE IF EXISTS bd_api_products;
-CREATE DATABASE bd_api_products CHARSET utf8mb4;
-USE bd_api_products;
+DROP DATABASE IF EXISTS bd_api_orders;
+CREATE DATABASE bd_api_orders CHARSET utf8mb4;
+USE bd_api_orders;
 
-CREATE TABLE categories (
+CREATE TABLE orders (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    name VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    cliente_id CHAR(36) NOT NULL,
+    status VARCHAR(20) NOT NULL, 
+    total_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+   
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE TABLE products (
-    id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
-    sku VARCHAR(50) UNIQUE NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    price DECIMAL(10,2) NOT NULL,
-    category_id CHAR(36) NOT NULL,
-    status ENUM('ACTIVE', 'INACTIVE') NOT NULL DEFAULT 'ACTIVE',
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
-);
-
-CREATE TABLE inventarios (
-    product_id CHAR(36),
-    quantity INTEGER NOT NULL DEFAULT 0,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (product_id),
+CREATE TABLE order_items (
+    order_id CHAR(36) NOT NULL,
+    product_id CHAR(36) NOT NULL,
+    quantity INTEGER NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    total_price DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (order_id, product_id),
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
     CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+CREATE TABLE orden_status_tracker (
+    id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    order_id CHAR(36) NOT NULL,
+    status VARCHAR(20) NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_order_tracker FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
 );

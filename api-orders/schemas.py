@@ -3,13 +3,16 @@ from uuid import UUID
 from datetime import datetime
 from typing import Optional
 
-class Product(BaseModel):
+class Order(BaseModel):
     id: UUID
-    sku: str = Field(..., min_length=1, max_length=50)
-    name: str = Field(..., min_length=1, max_length=255)
-    description: Optional[str] = None
-    price: float = Field(..., gt=0)
-    category_id: UUID
-    status: str = "ACTIVE"
+    cliente_id: UUID
+    status: str
+    total_amount: float = Field(..., gt=0)
     created_at: datetime
     updated_at: datetime
+
+class OrderItem(BaseModel):
+    order_id: UUID
+    product_id: UUID
+    quantity: int
+    unit_price: float
