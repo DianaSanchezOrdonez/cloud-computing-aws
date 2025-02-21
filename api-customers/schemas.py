@@ -1,14 +1,15 @@
 from pydantic import BaseModel, EmailStr
 from uuid import UUID
 from datetime import datetime
+from typing import Optional
 
 class Customer(BaseModel):
-    id: UUID
+    id: Optional[UUID] = None  # ID opcional en la solicitud
     email: EmailStr
     first_name: str
     last_name: str
-    phone: str | None = None
+    phone: Optional[str] = None
     status: str = "ACTIVE"
-    created_at: datetime
-    updated_at: datetime
+    created_at: Optional[datetime] = None 
+    updated_at: Optional[datetime] = None
     address: str
