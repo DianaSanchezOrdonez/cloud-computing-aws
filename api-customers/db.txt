@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS bd_api_customers;
+CREATE DATABASE bd_api_customers CHARSET utf8mb4;
+USE bd_api_customers;
+
 CREATE TABLE customers (
     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -9,3 +13,10 @@ CREATE TABLE customers (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     address VARCHAR(200) NOT NULL
 );
+
+INSERT INTO customers (email, first_name, last_name, phone, status, address) 
+VALUES 
+('juan.perez@example.com', 'Juan', 'Pérez', '123456789', 'ACTIVE', 'Av. Siempre Viva 123'),
+('maria.gomez@example.com', 'María', 'Gómez', '987654321', 'ACTIVE', 'Calle Falsa 456'),
+('carlos.lopez@example.com', 'Carlos', 'López', '555666777', 'INACTIVE', 'Av. Central 789');
+
