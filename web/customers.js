@@ -58,6 +58,10 @@ const get_customer_by_id = async (id) => {
 
 		client_edit_id = id // Save the customer ID to edit
 		modal.show()
+
+		const modal_title = document.querySelector(".modal-title");
+		modal_title.textContent = "Editar Cliente"
+
 	} catch (error) {
 		console.error(`Error loading the customer with ${id}`, error)
 	}
@@ -105,6 +109,9 @@ form.addEventListener("submit", async function (event) {
 				body: JSON.stringify(customer),
 			})
 		} else {
+			const modal_title = document.querySelector(".modal-title");
+			console.log('modal_title', modal_title)
+
 			await fetch(api_url, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },

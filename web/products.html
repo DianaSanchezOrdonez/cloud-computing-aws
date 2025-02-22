@@ -10,9 +10,11 @@
 	</head>
 	<body>
 		<div class="container mt-5">
-            <div class="mb-3">
-                <a href="index.html" class="btn btn-secondary">🏠 Volver al Dashboard</a>
-            </div>
+			<div class="mb-3">
+				<a href="index.html" class="btn btn-secondary"
+					>🏠 Volver al Dashboard</a
+				>
+			</div>
 
 			<h2 class="text-center">Gestión de Productos</h2>
 			<button
@@ -57,23 +59,39 @@
 							aria-label="Close"></button>
 					</div>
 					<div class="modal-body">
-						<form>
+						<form id="form-product">
 							<div class="mb-3">
 								<label class="form-label">Nombre</label>
-								<input type="text" class="form-control" />
+								<input type="text" class="form-control" id="name" required />
+							</div>
+							<div class="mb-3">
+								<label class="form-label">SKU</label>
+								<input type="text" class="form-control" id="sku" required />
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Descripción</label>
+								<input type="text" class="form-control" id="description" />
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Precio</label>
-								<input type="number" class="form-control" />
+								<input type="number" class="form-control" id="price" step="0.01" min="0" required />
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Categoría</label>
-								<select class="form-select">
-									<option value="cemento">Cemento</option>
-									<option value="concreto">Concreto</option>
+								<select
+									class="form-select"
+									id="category-select">
+									<option value="">
+										Cargando categorías...
+									</option>
+									<!-- Placeholder while loading -->
 								</select>
 							</div>
-							<button type="submit" class="btn btn-success">
+							<div class="mb-3">
+								<label class="form-label">Status</label>
+								<input type="text" class="form-control" id="status" />
+							</div>
+							<button type="submit" class="btn btn-success" id="save-button">
 								Guardar
 							</button>
 						</form>
